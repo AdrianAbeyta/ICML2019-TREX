@@ -11,11 +11,11 @@ This version was tested on a machine with:
 - Obtain a 30-day free trial on the MuJoCo website (https://www.roboti.us/license.html) or free license if you are a student. The license key will arrive in an email with your account number.
 - Download the getid_linux script from https://www.roboti.us/getid/getid_linux. By default, it should be in your Linux ~/Downloads folder. Now run the script. At a console:
 ```
-cd ~/Downloads
-chmod +x getid_linux
-./getid_linux
-```
-This will generate a computer ID.
+  cd ~/Downloads
+  chmod +x getid_linux
+  ./getid_linux
+  ```
+  This will generate a computer ID.
 
 - Go back to the MuJoCo license website (https://www.roboti.us/license.html) and scroll to the "Register Computer" block. Input your account number from Step 1 and your Computer ID from Step 2. You will be e-mailed an activation key file (mjkey.txt).
 
@@ -29,8 +29,10 @@ If you haven't installed Conda yet, follow the instructions here:
 https://docs.conda.io/projects/conda/en/latest/user-guide/install/linux.html
 ### Setting up the TREX Conda environment
 - Create a Conda environment that uses the required versions of Python, NumPy, and setuptools. At a terminal:
+
 `conda create --name TREX python=3.6 setuptools=45 numpy=1.16`
 - Activate the TREX Conda environment. At a terminal:
+
 `conda activate TREX`
 ### Installing TREX
 - With the Conda environment active, at a terminal:
