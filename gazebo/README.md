@@ -16,6 +16,7 @@ http://wiki.ros.org/catkin/Tutorials/create_a_workspace
 cd my_catkin_ws/src 
 git clone https://bitbucket.org/theconstructcore/turtlebot.git
 git clone https://bitbucket.org/theconstructcore/hokuyo_model.git
+git clone https://bitbucket.org/theconstructcore/openai_ros.git
 cd my_catkin_ws
 catkin_make
 source devel/setup.bash
