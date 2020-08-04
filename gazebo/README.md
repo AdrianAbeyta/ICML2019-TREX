@@ -22,7 +22,7 @@ source devel/setup.bash
 
 ```
 ## Virtual environment
-From the general python package sanity perspective, it is a good idea to use virtual environments (virtualenvs) to make sure packages from different projects do not interfere with each other. You can install virtualenv (which is itself a pip package) via
+From the general python package sanity perspective, it is a good idea to use virtual environments (virtualenvs) to make sure packages from different projects do not interfere with each other. This particular project requires ROS and Baselines integration of which both systems requre specific versions of python inorder to run correctly. You can install virtualenv (which is itself a pip package) via
 ```bash
 pip install virtualenv
 ```
@@ -38,11 +38,12 @@ To activate a virtualenv:
 More thorough tutorial on virtualenvs and options can be found [here](https://virtualenv.pypa.io/en/stable/) 
 
 
-# Baselines
+## Installing Baselines In Your Virtual Enviornment
 
 OpenAI Baselines is a set of high-quality implementations of reinforcement learning algorithms.
 
 These algorithms will make it easier for the research community to replicate, refine, and identify new ideas, and will create good baselines to build research on top of. Our DQN implementation and its variants are roughly on par with the scores in published papers. We expect they will be used as a base around which new ideas can be added, and as a tool for comparing a new approach against existing ones. 
+
 
 ## Prerequisites 
 Baselines requires python3 (>=3.5) with the development headers. You'll also need system packages CMake, OpenMPI and zlib. Those can be installed as follows
@@ -56,17 +57,56 @@ sudo apt-get update && sudo apt-get install cmake libopenmpi-dev python3-dev zli
 Installation of system packages on Mac requires [Homebrew](https://brew.sh). With Homebrew installed, run the following:
 ```bash
 brew install cmake openmpi
+```
+## Activate your virtual enviornment
+You will need to activate your virtual enviormnet inorder to download the necessary python 3 modules within it. 
+
+## Installation
+- Once in your virtual envirnment: 
+ ```
+cd my_catkin_ws/src
+ ```
+ 
+Clone the repo and cd into it:
+    ```bash
+    git clone https://github.com/openai/baselines.git
+    cd baselines
+    ```
+- If you don't have TensorFlow installed already, install your favourite flavor of TensorFlow. In most cases, 
+    ```bash 
+    pip install tensorflow-gpu # if you have a CUDA-compatible gpu and proper drivers
+    ```
+    or 
+    ```bash
+    pip install tensorflow
+    ```
+    should be sufficient. Refer to [TensorFlow installation guide](https://www.tensorflow.org/install/)
+    for more details. 
+
+- Install baselines package
+    ```bash
+    pip install -e .
+    ```
 
 ## Training
 
-- Example Script with the default hyperparameters
+- In a terminal.
 ```
-python preference_learning.py --env_id Hopper-v2 --env_type mujoco --learners_path ./learner/demo_models/hopper/checkpoints --max_chkpt 60 --num_models 5 --max_steps 40 --noise 0.0 --traj_noise 0 --num_layers 2 --log_dir ./log/hopper/max60/gt_traj_no_steps_noise/ --preference_type 'gt_traj_no_steps_noise' --custom_reward preference_normalized --ppo_log_path preference_norm_ctrl_coeff_011 --ctrl_coeff 0.1 --D 10000 --stochastic --rl_runs 5
+roscore
 ```
+-In a separate terminal.
+```
+roslaunch turtlebot_gazebo start_wall_world.launch
+```
+-In a separate terminal.
+```
+roslaunch turtlebot_gazebo put_turtlebot2_in_world.launch
+```
+-In a separate terminal from your virtual envirnment.
 
-### Eval
-
-- In order to evaluation, just put `--eval` option at the end.
 ```
-python preference_learning.py --env_id Hopper-v2 --env_type mujoco --learners_path ./learner/demo_models/hopper/checkpoints --max_chkpt 60 --num_models 5 --max_steps 40 --noise 0.0 --traj_noise 0 --num_layers 2 --log_dir ./log/hopper/max60/gt_traj_no_steps_noise/ --preference_type 'gt_traj_no_steps_noise' --custom_reward preference_normalized --ppo_log_path preference_norm_ctrl_coeff_011 --ctrl_coeff 0.1 --D 10000 --stochastic --rl_runs 5 --eval
+source /path/to/venv/bin/activate
+cd /path/to/this/repo/.../gazebo/learner/baselines/baselines/deepq/experiments
+python train_turtlebot2.py
+
 ```
