@@ -2,15 +2,24 @@
 
 ## Preparing
 
-- fullfilling the required ROS packages.
+- Install Robotic Operating System (ROS) for your supported machine. (Tested on ROS Melodic) 
 ```
-pip install -r requirements.txt
+http://wiki.ros.org/ROS/Installation
 ```
 
-- unzip the checkpointed policies ([download here](https://github.com/dsbrown1331/learning-rewards-of-learners/releases/download/mujoco/mujoco_models.tar.gz)) used for learning and evaluation.
+- Create a catkin workspace. More detail is given in the link below. 
 ```
-cd learner/demo_models
-tar xzvf mujoco_models.tar.gz
+http://wiki.ros.org/catkin/Tutorials/create_a_workspace
+```
+- Installing necessary packages in your catkin workspace. 
+```
+cd my_catkin_ws/src 
+git clone https://bitbucket.org/theconstructcore/turtlebot.git
+git clone https://bitbucket.org/theconstructcore/hokuyo_model.git
+cd my_catkin_ws
+catkin_make
+source devel/setup.bash
+
 ```
 
 ## Training
