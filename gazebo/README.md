@@ -2,7 +2,7 @@
 
 ## Preparing
 
-- fullfilling the required python packages.
+- fullfilling the required ROS packages.
 ```
 pip install -r requirements.txt
 ```
