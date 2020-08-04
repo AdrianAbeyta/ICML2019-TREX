@@ -94,15 +94,15 @@ Clone the repo and cd into it:
 ```
 roscore
 ```
--In a separate terminal.
+- In a separate terminal.
 ```
 roslaunch turtlebot_gazebo start_wall_world.launch
 ```
--In a separate terminal.
+- In a separate terminal.
 ```
 roslaunch turtlebot_gazebo put_turtlebot2_in_world.launch
 ```
--In a separate terminal from your virtual envirnment.
+- In a separate terminal from your virtual envirnment.
 
 ```
 source /path/to/venv/bin/activate
