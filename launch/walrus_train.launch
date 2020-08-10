@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <!-- Load required parameters from .yaml file -->
+    <rosparam command="load" file="$(find trex_openai_ros)/config/walrus_test_params.yaml" />
+
+    <!-- Convert ROS parameters into arguments needed for the learning script -->
+    <!-- <arg name="" value=/> -->
+
+
+    <!-- Launch the preference_learning script with the supplied arguments/parameters -->
+    <node pkg="trex_openai_ros" name="walrus_train" type="preference_learning.py" output="screen" ns="walrus"/>
+
+</launch>
