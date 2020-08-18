@@ -83,12 +83,13 @@ if __name__ == '__main__':
     
     #Initalized the learning algorithm 
     PPO2.learn(total_timesteps=int(total_timesteps),log_interval=int(log_interval), callback=callback)
-
+    
+    #WORK IN PROGRESS
     #Results of the reward function vs timesteps will be ploted once a mean reward above threshold is established. 
-    results_plotter.plot_results([log_dir], total_timesteps, results_plotter.X_TIMESTEPS, "MLP Turtlebot3 PPO2 Reward")
-    plt.show() 
+    #results_plotter.plot_results([log_dir], total_timesteps, results_plotter.X_TIMESTEPS, "MLP Turtlebot3 PPO2 Reward")
+    #plt.show() 
 
-    #Saves the final model  
+    #Saves the final model data as a .zip file. If .pkl format desired set cloudpickle=True
     PPO2.save("turtlebot3_final_reward", cloudpickle=False)
     print("Training Is Complete! :)") 
     
