@@ -70,7 +70,7 @@ model= PPO2(MlpPolicy, env,gamma=Gamma, n_steps=nsteps, verbose=1)
 
 
 #Stop training when the model reaches the reward threshold
-callback_on_best = StopTrainingOnRewardThreshold(reward_threshold=-200, verbose=1)
+callback_on_best = StopTrainingOnRewardThreshold(reward_threshold=400, verbose=1)
 eval_callback = EvalCallback(env, callback_on_new_best=callback_on_best, verbose=1)
 
 #Saves Model On desired Frequency
