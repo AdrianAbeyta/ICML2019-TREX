@@ -45,6 +45,12 @@ Gazebo should appear and a visual representation of training will begin. The che
 The checkpoints will be loaded based on the designated save_path set in the launch file. The learned reward function will be saved in the designated log_dir set in the launch file. 
 
 ## Use the TREX preference model to train a new RL model
+- The Stable-baselines Proximal Policy Optimization (PP02) RL model will be trained once again. However, the RL model will now use the T-REX neural network learned reward rather than the true enviornment reward. In the terminal of your choice, use the roslaunch command to begin training:
+
+```
+  $ roslaunch TODO
+```
+The checkpoints will be loaded based on the designated save_path set in the launch file. The learned policy will be saved in the designated (TODO) set in the launch file. 
 
 # Known Issues / Potential Improvements
 Only uses GTraj trajectory types
