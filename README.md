@@ -24,7 +24,7 @@ make a catkin workspace
 clone this, openai_ros, walrus_gazebo and walrus_description
 
 # Usage
-Like the 
+TREX (openai_ros) uses ROS to initiate all trainings via a launch file. Each launch file contains the scripts and configuration paramaters necessary for operation. Configurations for modifying variables can be can be found in the config folder along with a description of each variable. 
 
 ## Generate checkpointed RL models
 
