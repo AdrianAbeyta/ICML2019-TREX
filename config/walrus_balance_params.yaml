@@ -1,0 +1,18 @@
+walrus: #namespace
+    task_and_robot_environment_name: 'WalrusBalance-v0'
+    ros_ws_abspath: "/home/jd/trex_ros_ws"
+    #running_step: 0.04 # amount of time the control will be executed
+    #pos_step: 0.016     # increment in position for each command
+    
+    # Initial checkpointed PPO2 agent/policy training parameters
+    alpha: 0.1
+    gamma: 0.7
+    epsilon: 0.9
+    epsilon_discount: 0.999
+    nepisodes: 1000 # Number of training episodes
+    n_checkpoints: 10 # Number of checkpointed models to be saved
+    nsteps: 10000
+    running_step: 0.06 # Time for each step in a training episode
+    total_timesteps: 100000 # Total number of timesteps in an episode
+
+    checkpoint_dir: learner/demo_models/walrus_balance/checkpoints # Relative path to save checkpointed models

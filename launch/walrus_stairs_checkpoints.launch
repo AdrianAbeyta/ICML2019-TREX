@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <!-- Load required parameters from .yaml file -->
+    <rosparam command="load" file="$(find trex_openai_ros)/config/walrus_stairs_params.yaml" />
+
+    <!-- Define arguments needed for the learning script -->
+    <!-- Make changes here -->
+    <arg name="env_id" value="WalrusStairs-v0"/>   
+    <arg name="learners_path" value="$(find trex_openai_ros)/learner/demo_models/walrus_stairs/checkpoints"/>
+    <arg name="max_chkpt" value="10"/>
+    <arg name="max_steps" value="40"/>
+    <arg name="stochastic" value="true"/>
+
+    <!-- Define openai_ros parameters -->
+    <!-- <param name="walrus/ros_ws_abspath" value="/home/jd/trex_ros_ws"/> -->
+
+    <!-- Launch the preference_learning script with the supplied arguments -->
+    <!-- If desired, change name and namespace attributes. Args attribute shouldn't need to be edited. -->
+    <node pkg="trex_openai_ros" name="trex_checkpoints" type="trex_gen_checkpoints.py" output="screen"
+    args="--env_id=$(arg env_id)
+    --learners_path=$(arg learners_path)
+    --max_chkpt=$(arg max_chkpt)
+    --max_steps=$(arg max_steps)
+    --stochastic"/>
+</launch>
