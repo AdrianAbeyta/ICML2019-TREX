@@ -53,4 +53,9 @@ The checkpoints will be loaded based on the designated save_path set in the laun
 The checkpoints will be loaded based on the designated save_path set in the launch file. The learned policy will be saved in the designated (TODO) set in the launch file. 
 
 # Known Issues / Potential Improvements
-Only uses GTraj trajectory types
+
+- Only uses GTraj trajectory types
+- Occasional simulation robot reset issues during training.
+
+## License
+Determined by Scott???
