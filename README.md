@@ -37,7 +37,12 @@ Note: The example displayed will demonstrate learned obsticale avoidance of the 
 Gazebo should appear and a visual representation of training will begin. The checkpoints will be saved in the designated save_path set in the configurations.
 
 ## Train the TREX preference model
-[TO DO] This generates a neural network to approximate the reward function and...
+- Once checkpoints are generated, a neural network will be created from these checkpoints to approximate a learned reward function. In the terminal of your choice, use the roslaunch command to begin training:
+
+```
+  $ roslaunch pref_model.launch
+```
+The checkpoints will be loaded based on the designated save_path set in the launch file. The learned reward function will be saved in the designated log_dir set in the launch file. 
 
 ## Use the TREX preference model to train a new RL model
 
