@@ -27,6 +27,14 @@ clone this, openai_ros, walrus_gazebo and walrus_description
 TREX (openai_ros) uses ROS to initiate all trainings via a launch file. Each launch file contains the scripts and configuration paramaters necessary for operation. Configurations for modifying variables can be can be found in the config folder along with a description of each variable. 
 
 ## Generate checkpointed RL models
+Note: The example displayed will demonstrate learned obsticale avoidance of the Tutrlebot3 Burger by ROBOTIS. For demonstration of obsticale avoidance via the Walrus platform, please edit the env_id in the configurations to (INSERT WALRUS ENV_ID). 
+
+-Inorder to train the TREX preference model you first must develop checkpointed RL models for use as demonstrations. Stable-baselines Proximal Policy Optimization (PP02) was used in combination with a MLP inorder to generate the checkpoints. In the terminal of your choice, use the roslaunch command to begin training:
+
+```
+  $ roslaunch start_training_turtlebot3_ppo2.launch
+```
+Gazebo should appear and a visual representation of training will begin. The checkpoints will be saved in the designated save_path set in the configurations.
 
 ## Train the TREX preference model
 [TO DO] This generates a neural network to approximate the reward function and...
