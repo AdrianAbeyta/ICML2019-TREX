@@ -46,7 +46,7 @@ Note: The example displayed will demonstrate learned obsticale avoidance of the 
 - In order to train the TREX preference model, you first must develop checkpointed RL models for use as demonstrations. Stable-baselines Proximal Policy Optimization (PP02) was used in combination with MLP in order to generate the checkpoints. In the terminal of your choice, use the roslaunch command to begin training:
 
 ```
-  $ roslaunch start_training_turtlebot3_ppo2.launch
+  $ roslaunch gen_checkpoints_ppo2.launch
 ```
 Gazebo should appear and a visual representation of training will begin. The checkpoints will be saved in the designated save_path set in the configurations.
 
