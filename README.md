@@ -7,7 +7,7 @@ There are a few changes from the original code, notably:
 - The use of ROS parameters instead of arguments
 - The use of stable_baselines instead of openai-baselines
 - Creation of custom ROS environments for Gym, which are loaded into the Gym environment register at runtime
-- General updates to use more recent versions of Tensorflow, Gym, and other supporting software.
+- General updates to use more recent versions of Tensorflow, Gym, and other supporting software
 
 # Prerequisites
 This assumes you have the following software installed:
@@ -26,11 +26,12 @@ Copy the /Stairs and /ut_mesh folders into your ~/.gazebo/models folder.
 For example, the completed file path should be ~/.gazebo/models/ut_mesh
 
 ## Create a catkin workspace, clone packages, and build
-`cd ~
+```
+cd ~
 mkdir -p trex_ros_ws/src
 cd trex_ros_ws/src
 git clone 
-
+```
 
 make a catkin workspace
 
@@ -42,7 +43,7 @@ TREX (openai_ros) uses ROS to initiate all trainings via a launch file. Each lau
 ## Generate checkpointed RL models
 Note: The example displayed will demonstrate learned obsticale avoidance of the Tutrlebot3 Burger by ROBOTIS. For demonstration of obsticale avoidance via the Walrus platform, please edit the env_id in the configurations to (INSERT WALRUS ENV_ID). 
 
-- Inorder to train the TREX preference model you first must develop checkpointed RL models for use as demonstrations. Stable-baselines Proximal Policy Optimization (PP02) was used in combination with MLP inorder to generate the checkpoints. In the terminal of your choice, use the roslaunch command to begin training:
+- In order to train the TREX preference model, you first must develop checkpointed RL models for use as demonstrations. Stable-baselines Proximal Policy Optimization (PP02) was used in combination with MLP in order to generate the checkpoints. In the terminal of your choice, use the roslaunch command to begin training:
 
 ```
   $ roslaunch start_training_turtlebot3_ppo2.launch
