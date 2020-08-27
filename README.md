@@ -13,12 +13,15 @@ There are a few changes from the original code, notably:
 This assumes you have the following software installed:
 - Ubuntu 20.04
 - ROS Noetic (required since TREX uses Python 3 and Noetic is the only Python 3 version of ROS 1)
+- Conda (optional, but recommended to ensure Pythn version compatibility)
 
 This software was run using NVidia driver 440.100, CUDA 10.2 on a GeForce RTX 2060 Super 8GB.
 
 # Installation
 
-Some of these UTBox folders and github repos may require special access. If you can't get access, please 
+NOTE: The UTBox folders and Github repos may require special access.
+
+If you can't get access to UTBox links, please contact Dr. Pryor. For access to this (or any other Github repo), please contact me.
 
 ## Copy Gazebo models into your model folder
 First, copy over the gazebo model/mesh files from the cloud drive here: https://utexas.app.box.com/folder/121632471058
@@ -36,6 +39,17 @@ git clone
 make a catkin workspace
 
 clone this, openai_ros, walrus_gazebo and walrus_description
+
+## Create the conda environment & install remaining Python packages
+In a terminal:
+```
+cd trex_ros_ws/src
+conda create --name TREX python=3.6 setuptools=45 numpy=1.16
+conda activate TREX
+pip3 install Cython==0.27.3
+pip3 install cffi==1.11.5
+pip3 install -r requirements.txt
+```
 
 # Usage
 TREX (openai_ros) uses ROS to initiate all trainings via a launch file. Each launch file contains the scripts and configuration paramaters necessary for operation. Configurations for modifying variables can be can be found in the config folder along with a description of each variable. 
@@ -71,7 +85,7 @@ The checkpoints will be loaded based on the designated save_path set in the laun
 - Currently, the preference model only accepts GTraj trajectory types. This could be expanded to The other trajectory types in mujoco/preference_learning.py 
 - Occasional simulation robot reset issues during training.
 - Set up the git repo to add other repositories as submodules, so that a git clone --recursive of this repo is the only clone command needed.
-- Alternate meshes of the UT campus can be found in [TO DO BOX FOLDER]. These meshes feature fewer polygons for quicker loading, and have color as well. There is also a Pandas datafile which contains a lookup table to determine the terrain type for a given (x,y) position on the mesh. Ideally, you could get your current odometry (i.e. x,y pose) in gazebo, query the Pandas database with your (x,y), and determine the terrain classification. We wanted to implement this function but ran out of time in Summer 2020. The enclosed .boxnote contains more information.
+- Alternate meshes of the UT campus can be found in https://utexas.app.box.com/folder/121689530768. These meshes feature fewer polygons for quicker loading, and have color as well. There is also a Pandas datafile which contains a lookup table to determine the terrain type for a given (x,y) position on the mesh. Ideally, you could get your current odometry (i.e. x,y pose) in gazebo, query the Pandas database with your (x,y), and determine the terrain classification. We wanted to implement this function but ran out of time in Summer 2020. The enclosed .boxnote contains more information.
 
 ## License
 Determined by Scott???
