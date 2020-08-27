@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>
+
+<!-- Load required parameters from .yaml file -->
+   
+    <rosparam command="load" file="$(find my_turtlebot3_openai_example)/config/openai_ppo2_params.yaml"/>
+    
+    <!-- Launch the training system -->
+    <node pkg="my_turtlebot3_openai_example" name="turtlebot3_world" type="gen_checkpoints_ppo2.py" output="screen"/>
+
+    
+</launch>
