@@ -17,4 +17,4 @@ turtlebot3: #namespace
     running_step: 0.06 # Time for each step
     log_interval: 1000 #Number of timesteps before logging.
     save_freq: 1000 #Frequency of model checkpoints that will be saved durring training.
-    total_timesteps: 128 #Number of TIME steps alloud for each episode.
+    total_timesteps: 128 #Number of TIME steps alloud for each episode
