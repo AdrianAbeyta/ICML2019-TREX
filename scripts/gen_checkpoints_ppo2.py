@@ -24,7 +24,7 @@ from stable_baselines.results_plotter import load_results, ts2xy
 
 if __name__ == '__main__':
 
-    rospy.init_node('turtlebot3_world_qlearn', anonymous=True, log_level=rospy.WARN)
+    rospy.init_node('turtlebot3_world', anonymous=True, log_level=rospy.WARN)
 
     # Init OpenAI_ROS ENV
     task_and_robot_environment_name = rospy.get_param(
