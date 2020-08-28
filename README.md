@@ -40,6 +40,18 @@ make a catkin workspace
 
 clone this, openai_ros, walrus_gazebo and walrus_description
 
+## Clone Turtlebot3 model and enviornment
+If you desire to use the Tutrlebot3 Burger by ROBOTIS for simulation please clone and build these in your catkin workspace. 
+```
+cd ~
+cd trex_ros_ws/src
+git clone https://github.com/ROBOTIS-GIT/turtlebot3.git
+git clone https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
+cd ..
+catkin_make
+```
+
+
 ## Create the conda environment & install remaining Python packages
 In a terminal:
 ```
