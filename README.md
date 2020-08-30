@@ -13,7 +13,7 @@ There are a few changes from the original code, notably:
 This assumes you have the following software installed:
 - Ubuntu 20.04
 - ROS Noetic (required since TREX uses Python 3 and Noetic is the only Python 3 version of ROS 1)
-- Conda (optional, but recommended to ensure Pythn version compatibility)
+- Conda (optional, but recommended to ensure Python version compatibility and package installation)
 
 This software was run using NVidia driver 440.100, CUDA 10.2 on a GeForce RTX 2060 Super 8GB.
 
@@ -21,27 +21,48 @@ This software was run using NVidia driver 440.100, CUDA 10.2 on a GeForce RTX 20
 
 NOTE: The UTBox folders and Github repos may require special access.
 
-If you can't get access to UTBox links, please contact Dr. Pryor. For access to this (or any other Github repo), please contact me.
+If you can't get access to UTBox links or UT Nuclear Robotics Github, please contact Dr. Pryor. For access to this (or any other Github repo), please contact me.
 
 ## Copy Gazebo models into your model folder
 First, copy over the gazebo model/mesh files from the cloud drive here: https://utexas.app.box.com/folder/121632471058
+
 Copy the /Stairs and /ut_mesh folders into your ~/.gazebo/models folder.
+
 For example, the completed file path should be ~/.gazebo/models/ut_mesh
+
+## Create & activate Conda environment (Optional but recommended)
+In a terminal:
+```
+cd ~/trex_ros_ws/src
+conda create --name TREX python=3.6 setuptools=45 numpy=1.16
+conda activate TREX
+```
+
+## Install required Python packages
+In a terminal:
+```
+pip install catkin_pkg
+pip install empy
+pip install Cython==0.27.3
+pip install cffi==1.11.5
+```
 
 ## Create a catkin workspace, clone packages, and build
 ```
 cd ~
 mkdir -p trex_ros_ws/src
-cd trex_ros_ws/src
-git clone 
+cd ~/trex_ros_ws/src
+git clone https://github.com/roboav8r/openai_ros.git
+git clone -b openai --single-branch https://github.com/UTNuclearRobotics/walrus_description
+git clone -b openai --single-branch https://github.com/UTNuclearRobotics/walrus_gazebo
+git clone -b openai_ros --single-branch https://github.com/roboav8r/ICML2019-TREX.git
+cd ~/trex_ros_ws/src
+
+catkin build
 ```
 
-make a catkin workspace
-
-clone this, openai_ros, walrus_gazebo and walrus_description
-
-## Clone Turtlebot3 model and enviornment
-If you desire to use the Tutrlebot3 Burger by ROBOTIS for simulation please clone and build these in your catkin workspace. 
+## Clone Turtlebot3 model and environment
+If you desire to use the Turtlebot3 Burger by ROBOTIS for simulation please clone and build these in your catkin workspace. 
 ```
 cd ~
 cd trex_ros_ws/src
@@ -52,14 +73,10 @@ catkin_make
 ```
 
 
-## Create the conda environment & install remaining Python packages
+## Install remaining Python packages
 In a terminal:
 ```
 cd trex_ros_ws/src
-conda create --name TREX python=3.6 setuptools=45 numpy=1.16
-conda activate TREX
-pip3 install Cython==0.27.3
-pip3 install cffi==1.11.5
 pip3 install -r requirements.txt
 ```
 
