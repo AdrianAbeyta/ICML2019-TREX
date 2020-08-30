@@ -52,13 +52,14 @@ git clone https://github.com/roboav8r/openai_ros.git
 git clone -b openai --single-branch https://github.com/UTNuclearRobotics/walrus_description
 git clone -b openai --single-branch https://github.com/UTNuclearRobotics/walrus_gazebo
 git clone -b openai_ros --single-branch https://github.com/roboav8r/ICML2019-TREX.git
+chmod +x ICML2019-TREX/scripts/* # Ensure all TREX scripts are executable
 cd ~/trex_ros_ws
 pip install -r src/ICML2019-TREX/requirements.txt # Install remaining Python packages
 catkin build
 ```
 
 ## Clone Turtlebot3 model and environment
-If you desire to use the Turtlebot3 Burger by ROBOTIS for simulation, clone and build the following packages in your catkin workspace. 
+If you desire to use the Turtlebot3 Burger by ROBOTIS for simulation, clone and build the following packages in your catkin workspace.
 ```
 cd ~/trex_ros_ws/src
 git clone https://github.com/ROBOTIS-GIT/turtlebot3.git
@@ -71,8 +72,9 @@ catkin build
 TREX (openai_ros) uses ROS to initiate all trainings via a launch file. Each launch file contains the scripts and configuration paramaters necessary for operation. Configurations for modifying variables can be can be found in the config folder along with a description of each variable. 
 
 ## Preparing the workspace
-Before each session, make sure that the Conda environment is appended to the PYTHONPATH variable (if applicable), and that the workspace is sourced:
+Before each session, make sure that the Conda environment is active and appended to the PYTHONPATH variable (if applicable), and that the workspace is sourced:
 ```
+conda activate TREX # If applicable
 export PYTHONPATH=~/anaconda3/envs/TREX/lib/python3.6/site-packages:$PYTHONPATH # Necessary ONLY IF using Conda with ROS
 source ~/trex_ros_ws/devel/setup.bash
 ```
@@ -83,7 +85,9 @@ Note: The example displayed will demonstrate learned obsticale avoidance of the 
 - In order to train the TREX preference model, you first must develop checkpointed RL models for use as demonstrations. Stable-baselines Proximal Policy Optimization (PP02) was used in combination with MLP in order to generate the checkpoints. In the terminal of your choice, use the roslaunch command to begin training:
 
 ```
-  $ roslaunch gen_checkpoints_ppo2.launch
+$ roslaunch gen_checkpoints_ppo2.launch # By default, uses the Turtlebot3 with turtlebot_world environment
+$ roslaunch trex_openai_ros gen_checkpoints_ppo2.launch robot:='walrus' task:='walrus_balance' # To generate checkpointed balancing Walrus agents
+  
 ```
 Gazebo should appear and a visual representation of training will begin. The checkpoints will be saved in the designated save_path set in the configurations.
 
