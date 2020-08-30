@@ -13,9 +13,9 @@ There are a few changes from the original code, notably:
 This assumes you have the following software installed:
 - Ubuntu 20.04
 - ROS Noetic (required since TREX uses Python 3 and Noetic is the only Python 3 version of ROS 1)
-- Conda (optional, but recommended to ensure Python version compatibility and package installation)
+- Conda (optional, but recommended to ensure Python 3.6 version compatibility and package installation)
 
-This software was run using NVidia driver 440.100, CUDA 10.2 on a GeForce RTX 2060 Super 8GB.
+This software was run using NVidia driver 440.100, CUDA 10.1, cuDNN 7.6.5 on a GeForce RTX 2060 Super 8GB.
 
 # Installation
 
@@ -33,21 +33,17 @@ For example, the completed file path should be ~/.gazebo/models/ut_mesh
 ## Create & activate Conda environment (Optional but recommended)
 In a terminal:
 ```
-cd ~/trex_ros_ws/src
 conda create --name TREX python=3.6 setuptools=45 numpy=1.16
 conda activate TREX
-```
+export PYTHONPATH=~/anaconda3/envs/TREX/lib/python3.6/site-packages:$PYTHONPATH # Necessary to use Conda with ROS
 
-## Install required Python packages
+```
+## Install apt packages
 In a terminal:
 ```
-pip install catkin_pkg
-pip install empy
-pip install Cython==0.27.3
-pip install cffi==1.11.5
+sudo apt-get update && sudo apt-get install cmake libopenmpi-dev python3-dev zlib1g-dev git
 ```
-
-## Create a catkin workspace, clone packages, and build
+## Create a catkin workspace, clone ROS packages, and build catkin workspace
 ```
 cd ~
 mkdir -p trex_ros_ws/src
@@ -56,32 +52,30 @@ git clone https://github.com/roboav8r/openai_ros.git
 git clone -b openai --single-branch https://github.com/UTNuclearRobotics/walrus_description
 git clone -b openai --single-branch https://github.com/UTNuclearRobotics/walrus_gazebo
 git clone -b openai_ros --single-branch https://github.com/roboav8r/ICML2019-TREX.git
-cd ~/trex_ros_ws/src
-
+cd ~/trex_ros_ws
+pip install -r src/ICML2019-TREX/requirements.txt # Install remaining Python packages
 catkin build
 ```
 
 ## Clone Turtlebot3 model and environment
-If you desire to use the Turtlebot3 Burger by ROBOTIS for simulation please clone and build these in your catkin workspace. 
+If you desire to use the Turtlebot3 Burger by ROBOTIS for simulation, clone and build the following packages in your catkin workspace. 
 ```
-cd ~
-cd trex_ros_ws/src
+cd ~/trex_ros_ws/src
 git clone https://github.com/ROBOTIS-GIT/turtlebot3.git
 git clone https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
-cd ..
-catkin_make
-```
-
-
-## Install remaining Python packages
-In a terminal:
-```
-cd trex_ros_ws/src
-pip3 install -r requirements.txt
+cd ~/trex_ros_ws
+catkin build
 ```
 
 # Usage
 TREX (openai_ros) uses ROS to initiate all trainings via a launch file. Each launch file contains the scripts and configuration paramaters necessary for operation. Configurations for modifying variables can be can be found in the config folder along with a description of each variable. 
+
+## Preparing the workspace
+Before each session, make sure that the Conda environment is appended to the PYTHONPATH variable (if applicable), and that the workspace is sourced:
+```
+export PYTHONPATH=~/anaconda3/envs/TREX/lib/python3.6/site-packages:$PYTHONPATH # Necessary ONLY IF using Conda with ROS
+source ~/trex_ros_ws/devel/setup.bash
+```
 
 ## Generate checkpointed RL models
 Note: The example displayed will demonstrate learned obsticale avoidance of the Tutrlebot3 Burger by ROBOTIS. For demonstration of obsticale avoidance via the Walrus platform, please edit the env_id in the configurations to (INSERT WALRUS ENV_ID). 
