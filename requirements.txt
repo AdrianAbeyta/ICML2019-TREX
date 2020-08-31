@@ -1,10 +1,11 @@
 absl-py==0.7.0
 astor==0.7.1
-atari-py==0.1.1
+#atari-py==0.1.1
 better-exceptions==0.1.8
 bleach==1.5.0
 Box2D==2.3.2
 Box2D-kengz==2.3.3
+catkin_pkg
 certifi==2017.11.5
 cffi==1.11.5
 chardet==3.0.4
@@ -14,6 +15,7 @@ Cython==0.27.3
 dask==1.0.0
 decorator==4.3.0
 #dm-control==0.0.0
+empy
 entrypoints==0.2.3
 #enum34==1.1.6
 future==0.16.0
@@ -46,7 +48,7 @@ Keras-Preprocessing==1.0.5
 lockfile==0.12.2
 lxml==4.1.1
 Markdown==2.6.11
-MarkupSafe==1.0
+#MarkupSafe==1.0
 matplotlib==2.1.0
 mistune==0.8.1
 moviepy==0.2.3.5
@@ -60,7 +62,7 @@ notebook==5.2.1
 olefile==0.44
 opencv-python>=4.3
 pachi-py==0.0.21
-pandas==0.21.0
+#pandas==0.21.0
 pandocfilters==1.4.2
 parso==0.1.0
 pbr==3.1.1
@@ -84,10 +86,12 @@ PyYAML==3.12
 pyzmq==16.0.3
 qtconsole==4.3.1
 requests==2.18.4
+rospkg
 scikit-image==0.14.1
 scipy==1.0.0
 simplegeneric==0.8.1
 six==1.11.0
+stable-baselines
 stevedore==1.28.0
 #tensorboard==1.15
 tensorflow-gpu==1.15

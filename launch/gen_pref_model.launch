@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <launch>
+
 
     <!-- Handle launch file input arguments -->
     <arg name="task" default="turtlebot3_world" />
@@ -8,8 +8,9 @@
 
     <!-- Load required parameters from .yaml file -->
     <rosparam command="load" file="$(find trex_openai_ros)/config/$(arg task).yaml"/>
-    
-    <!-- Launch the initial trainer/checkpoint model node -->
-    <node pkg="trex_openai_ros" name="checkpoint_node" type="gen_checkpoints_ppo2.py" output="screen" args="--namespace=$(arg robot)"/>
-    
+
+    <!-- Launch the preference_learning script with the supplied arguments -->
+    <!-- If desired, change name and namespace attributes. Args attribute shouldn't need to be edited. -->
+    <node pkg="trex_openai_ros" name="trex_pref_model" type="gen_pref_model.py" output="screen" args="--namespace=$(arg robot)"/>
+
 </launch>

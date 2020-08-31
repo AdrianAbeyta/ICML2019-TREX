@@ -5,9 +5,12 @@ import os
 import matplotlib.pyplot as plt
 import numpy
 import time
+import argparse
+
 #ROS Packages
 import rospy
 import rospkg
+
 #Openai_ros,stable baselines,and gym packages
 import gym
 from gym import wrappers
@@ -24,47 +27,46 @@ from stable_baselines.results_plotter import load_results, ts2xy
 
 if __name__ == '__main__':
 
-    rospy.init_node('turtlebot3_world', anonymous=True, log_level=rospy.WARN)
+    # Start the ROS node
+    rospy.init_node('checkpoint_node', anonymous=True, log_level=rospy.WARN)
 
-    # Init OpenAI_ROS ENV
-    task_and_robot_environment_name = rospy.get_param(
-        '/turtlebot3/task_and_robot_environment_name')
-
+    # Handle input arguments
+    parser = argparse.ArgumentParser(description=None) # Create argument parser
+    parser.add_argument('--namespace')
+    args, unknown = parser.parse_known_args()
+    
+    # Init OpenAI_ROS Gym environment
+    task_param_string = '/' + args.namespace + '/task_and_robot_environment_name'
+    task_and_robot_environment_name = rospy.get_param(task_param_string)
     env=(StartOpenAI_ROS_Environment(task_and_robot_environment_name))
-
-    # Create the Gym environment
     rospy.loginfo("Gym environment done")
-    rospy.loginfo("Starting Learning")
 
     # Loads parameters from the ROS param server
     # Parameters are stored in a yaml file inside the config directory
     # They are loaded at runtime by the launch file
-
-
-    save_path=rospy.get_param('/turtlebot3/save_path')
-    pkg_path=rospy.get_param("turtlebot3/pkg_path")
-
-    Gamma = rospy.get_param("/turtlebot3/gamma")
-    nepisodes = rospy.get_param("/turtlebot3/nepisodes")
-    nsteps = rospy.get_param("/turtlebot3/nsteps")
-    running_step = rospy.get_param("/turtlebot3/running_step")
-    log_interval=rospy.get_param("turtlebot3/log_interval")
-    save_freq=rospy.get_param("turtlebot3/save_freq")
-    total_timesteps=rospy.get_param("turtlebot3/total_timesteps")
-
-
+    checkpoint_dir=rospy.get_param('/' + args.namespace + '/checkpoint_dir')
+    #pkg_path=rospy.get_param('/' + args.namespace + '/pkg_path')
+    Gamma = rospy.get_param('/' + args.namespace + '/gamma')
+    nepisodes = rospy.get_param('/' + args.namespace + '/nepisodes')
+    nsteps = rospy.get_param('/' + args.namespace + '/nsteps')
+    running_step = rospy.get_param('/' + args.namespace + '/running_step')
+    log_interval=rospy.get_param('/' + args.namespace + '/log_interval')
+    save_freq=rospy.get_param('/' + args.namespace + '/save_freq')
+    total_timesteps=rospy.get_param('/' + args.namespace + '/total_timesteps')
 
     # Set the logging system
-    # Add relative path of folder you want checkpoints to save too. 
+    # Add relative path of folder you want checkpoints to save to. 
+    rospack = rospkg.RosPack()
+    pkg_path = rospack.get_path('trex_openai_ros') # Find package
+
+    save_path = pkg_path + '/' + checkpoint_dir # Save to relative directory, specified in .yaml file
     log_dir = save_path
     os.makedirs(log_dir, exist_ok=True)
-    rospack = rospkg.RosPack()
-    pkg_path = rospack.get_path(pkg_path)
     outdir = log_dir + '/training_results'
 
     #Visualize the training. 
     env = Monitor(env, outdir,log_dir)
-    env._max_episode_steps =100000
+    env._max_episode_steps = total_timesteps
     rospy.loginfo("Monitor Wrapper started")
     last_time_steps = numpy.ndarray(0)
    

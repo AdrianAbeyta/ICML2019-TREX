@@ -1,0 +1,18 @@
+walrus: #namespace
+    task_and_robot_environment_name: 'WalrusStairs-v0'
+    ros_ws_abspath: "/home/jd/trex_install_ws"
+    #running_step: 0.04 # amount of time the control will be executed
+    #pos_step: 0.016     # increment in position for each command
+    
+    # Initial checkpointed PPO2 agent/policy training parameters
+    gamma: 0.999
+    nepisodes: 4  #Number of episodes to run. 
+    nsteps: 10000
+    running_step: 0.06 # Time for each step
+    log_interval: 1000 #Number of timesteps before logging.
+    save_freq: 1000 #Frequency of model checkpoints that will be saved during training.
+    total_timesteps: 100000 
+    checkpoint_dir: walrus_stairs/checkpoints # Relative path to save checkpointed models
+
+    # Preference model parameters
+    pref_model_dir: walrus_stairs/pref_model # Relative path to save the preference model (reward function)
