@@ -80,7 +80,9 @@ source ~/trex_ros_ws/devel/setup.bash
 ```
 
 ## Modify config files as needed
-The provided /config/\*yaml files were developed on my personal computer; you will need to change one of the ROS parameters for your computer.
+The provided /config/\*yaml files were developed on my personal computer; you will need to change the trex_ros_ws parameter.
+
+For example, if you wish to train the walrus_balance task, change ros_ws_abspath from "/home/jd/trex_ros_ws" to "/home/[your user name]/trex_ros_ws"
 
 ## Generate checkpointed RL models
 Note: By default, the example displayed will demonstrate learned obstical avoidance of the Turtlebot3 Burger by ROBOTIS. For demonstration of obstical avoidance via the Walrus platform, . 
@@ -94,7 +96,12 @@ or
 ```
 $ roslaunch trex_openai_ros gen_checkpoints_ppo2.launch robot:='walrus' task:='walrus_balance' # To generate checkpointed balancing Walrus agents
 ```
-Other available walrus tasks include walrus_stairs (a stair climbing task) and walrus_nav (a 2d navigation task).
+or
+```
+$ roslaunch trex_openai_ros gen_checkpoints_ppo2.launch robot:='walrus' task:='walrus_stairs' # To generate checkpointed stairclimbing Walrus agents
+```
+
+Other available walrus tasks include walrus_nav (a 2d navigation task).
 
 Gazebo should appear and a visual representation of training will begin. The checkpoints will be saved in the designated checkpoint_dir set in the appropriate config/\*yaml file.
 
@@ -120,5 +127,6 @@ The checkpoints will be loaded based on the designated save_path set in the laun
 - Occasional simulation robot reset issues during training.
 - Set up the git repo to add other repositories as submodules, so that a git clone --recursive of this repo is the only clone command needed.
 - Alternate meshes of the UT campus can be found in https://utexas.app.box.com/folder/121689530768. These meshes feature fewer polygons for quicker loading, and have color as well. There is also a Pandas datafile which contains a lookup table to determine the terrain type for a given (x,y) position on the mesh. Ideally, you could get your current odometry (i.e. x,y pose) in gazebo, query the Pandas database with your (x,y), and determine the terrain classification. We wanted to implement this function but ran out of time in Summer 2020. The enclosed .boxnote contains more information.
+- Change the ros_ws_abspath to a relative path, or one that uses ~/ so that the user doesn't need to change it manually
 
 
