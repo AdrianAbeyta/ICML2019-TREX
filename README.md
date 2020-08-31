@@ -79,25 +79,32 @@ export PYTHONPATH=~/anaconda3/envs/TREX/lib/python3.6/site-packages:$PYTHONPATH 
 source ~/trex_ros_ws/devel/setup.bash
 ```
 
+## Modify config files as needed
+The provided /config/\*yaml files were developed on my personal computer; you will need to change one of the ROS parameters for your computer.
+
 ## Generate checkpointed RL models
-Note: The example displayed will demonstrate learned obsticale avoidance of the Tutrlebot3 Burger by ROBOTIS. For demonstration of obsticale avoidance via the Walrus platform, please edit the env_id in the configurations to (INSERT WALRUS ENV_ID). 
+Note: By default, the example displayed will demonstrate learned obstical avoidance of the Turtlebot3 Burger by ROBOTIS. For demonstration of obstical avoidance via the Walrus platform, . 
 
 - In order to train the TREX preference model, you first must develop checkpointed RL models for use as demonstrations. Stable-baselines Proximal Policy Optimization (PP02) was used in combination with MLP in order to generate the checkpoints. In the terminal of your choice, use the roslaunch command to begin training:
 
 ```
 $ roslaunch gen_checkpoints_ppo2.launch # By default, uses the Turtlebot3 with turtlebot_world environment
-$ roslaunch trex_openai_ros gen_checkpoints_ppo2.launch robot:='walrus' task:='walrus_balance' # To generate checkpointed balancing Walrus agents
-  
 ```
-Gazebo should appear and a visual representation of training will begin. The checkpoints will be saved in the designated save_path set in the configurations.
+or
+```
+$ roslaunch trex_openai_ros gen_checkpoints_ppo2.launch robot:='walrus' task:='walrus_balance' # To generate checkpointed balancing Walrus agents
+```
+Other available walrus tasks include walrus_stairs (a stair climbing task) and walrus_nav (a 2d navigation task).
+
+Gazebo should appear and a visual representation of training will begin. The checkpoints will be saved in the designated checkpoint_dir set in the appropriate config/\*yaml file.
 
 ## Train the TREX preference model
 - Once checkpoints are generated, a neural network will be created from these checkpoints to approximate a learned reward function. In the terminal of your choice, use the roslaunch command to begin training:
 
 ```
-  $ roslaunch pref_model.launch
+  $ roslaunch trex_openai_ros gen_pref_model.launch robot:='walrus' task:='walrus_balance'
 ```
-The checkpoints will be loaded based on the designated save_path set in the launch file. The learned reward function will be saved in the designated log_dir set in the launch file. 
+The checkpoints will be loaded based on the designated save_path set in the launch file. The learned reward function will be saved in the designated pref_model_dir set in the config file. 
 
 ## Use the TREX preference model to train a new RL model
 - The Stable-baselines Proximal Policy Optimization (PP02) RL model will be trained once again. However, the RL model will now use the T-REX neural network learned reward rather than the true enviornment reward. In the terminal of your choice, use the roslaunch command to begin training:
