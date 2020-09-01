@@ -63,7 +63,7 @@ If you desire to use the Turtlebot3 Burger by ROBOTIS for simulation, clone and 
 ```
 cd ~/trex_ros_ws/src
 git clone https://github.com/ROBOTIS-GIT/turtlebot3.git
-git clone https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
+git clone git clone https://bitbucket.org/theconstructcore/turtlebot3.git
 cd ~/trex_ros_ws
 catkin build
 ```
