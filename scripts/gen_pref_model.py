@@ -346,7 +346,7 @@ class GTDataset(object):
         return D
 
 # Backpropagate the reward function model to fit the trajectory data
-def train(prefdir, env, chkptdir, min_length, include_action, num_models, steps, num_layers, embedding_dims, D, l2_reg, noise):
+def train(prefdir, env, chkptdir, min_length, include_action, num_models, steps, num_layers, embedding_dims, D_num_samples, l2_reg, noise):
     
     # Convert directories to path objects
     pref_path = Path(prefdir)
@@ -368,14 +368,6 @@ def train(prefdir, env, chkptdir, min_length, include_action, num_models, steps,
         f.write( str(args) )
     
     pref_path = str(pref_path)
-    #env = gym.make(args.env_id)
-    # env = StartOpenAI_ROS_Environment(args.env_id)
-    # print("Training with env: ")
-    # print(env)
-
-    # # Create the Gym environment
-    # rospy.loginfo("Gym environment done")
-    # rospy.loginfo("Starting Learning")
 
     # train_agents = [RandomAgent(env.action_space)] if args.random_agent else []
     train_agents=[] # Initialize empty list
@@ -402,7 +394,8 @@ def train(prefdir, env, chkptdir, min_length, include_action, num_models, steps,
     for i in range(num_models):
         with tf.variable_scope('model_%d'%i):
             rospy.logdebug('observation_space: ' + str(env.observation_space) + ', action_space: ' + str(env.action_space))
-            models.append(PrefModel(include_action,5,1,steps=steps,num_layers=num_layers,embedding_dims=embedding_dims)) # TODO: come back and fix the dimensions
+            rospy.logdebug('observation_space shape: ' + str(env.observation_space.shape) + ', action_space shape: ' + str(env.action_space.shape))
+            models.append(PrefModel(include_action,env.observation_space.shape[0],env.action_space.shape[0],steps=steps,num_layers=num_layers,embedding_dims=embedding_dims)) # TODO: come back and fix the dimensions
 
     ### Initialize Parameters
     init_op = tf.group(tf.global_variables_initializer(),
@@ -415,7 +408,7 @@ def train(prefdir, env, chkptdir, min_length, include_action, num_models, steps,
     sess.run(init_op)
 
     for i,model in enumerate(models):
-        D = dataset.sample(num_samples=D,steps=steps,include_action=include_action)
+        D = dataset.sample(num_samples=D_num_samples,steps=steps,include_action=include_action)
 
         if D is None:
             model.train_with_dataset(dataset,64,include_action=include_action,debug=True)
@@ -449,7 +442,7 @@ if __name__ == '__main__':
     steps =rospy.get_param('/' + args.namespace + '/steps')
     num_layers =rospy.get_param('/' + args.namespace + '/num_layers')
     embedding_dims =rospy.get_param('/' + args.namespace + '/embedding_dims')
-    D = rospy.get_param('/' + args.namespace + '/D')
+    D_num_samples = rospy.get_param('/' + args.namespace + '/D')
     l2_reg = rospy.get_param('/' + args.namespace + '/l2_reg')
     noise = rospy.get_param('/' + args.namespace + '/noise')
 
@@ -464,7 +457,7 @@ if __name__ == '__main__':
     #pref_model_dir = Path(args.log_dir)
 
     # Load the checkpointed model(s) and train the preference model
-    train(pref_dir, env, chkpt_dir, min_length, include_action, num_models, steps, num_layers, embedding_dims, D, l2_reg, noise)
+    train(pref_dir, env, chkpt_dir, min_length, include_action, num_models, steps, num_layers, embedding_dims, D_num_samples, l2_reg, noise)
 
     # Close the environment when the preference model has been trained
     env.close()

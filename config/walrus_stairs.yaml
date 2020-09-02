@@ -7,11 +7,11 @@ walrus: #namespace
     # Initial checkpointed PPO2 agent/policy training parameters
     gamma: 0.999
     nepisodes: 4  #Number of episodes to run. 
-    nsteps: 10000
+    nsteps: 100000
     running_step: 0.06 # Time for each step
-    log_interval: 1000 #Number of timesteps before logging.
-    save_freq: 1000 #Frequency of model checkpoints that will be saved during training.
-    total_timesteps: 100000 
+    log_interval: 10000 #Number of timesteps before logging.
+    save_freq: 10000 #Frequency of model checkpoints that will be saved during training.
+    total_timesteps: 1000000 
     checkpoint_dir: walrus_stairs/checkpoints # Relative path to save checkpointed models
 
     # Preference model parameters
