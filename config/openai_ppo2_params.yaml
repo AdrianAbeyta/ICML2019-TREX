@@ -1,0 +1,20 @@
+turtlebot3: #namespace
+    
+    #Logging and enviornment parameters
+
+    task_and_robot_environment_name: 'TurtleBot3World-v0' #Edit to change agent world env
+    ros_ws_abspath: "/home/adrian/trex_ros_ws" #Workspace containing your openai_ros and turtlbot3 ROS files.
+    pkg_path: "ICML2019-TREX"
+    save_path: '/home/adrian/trex_ros_ws/src/learner/ppo2_checkpoints'
+    running_step: 0.04 # amount of time the control will be executed
+    pos_step: 0.016 # Increment in position for each command
+    
+
+    #ppo2 parameters
+    gamma: 0.999
+    nepisodes: 8 #Number of episodes to run. 
+    nsteps: 128 #Number of steps to run for each episode. 
+    running_step: 0.06 # Time for each step
+    log_interval: 1000 #Number of timesteps before logging.
+    save_freq: 1000 #Frequency of model checkpoints that will be saved durring training.
+    total_timesteps: 128 #Number of TIME steps alloud for each episode

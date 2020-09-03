@@ -1,6 +1,6 @@
 turtlebot3: #namespace
     task_and_robot_environment_name: 'TurtleBot3World-v0'
-    ros_ws_abspath: "/home/jd/trex_ros_ws"
+    ros_ws_abspath: "/home/adrian/trex_ros_ws"
     running_step: 0.04 # amount of time the control will be executed
     pos_step: 0.016     # increment in position for each command
     
@@ -14,4 +14,5 @@ turtlebot3: #namespace
     nsteps: 10000
     running_step: 0.06 # Time for each step in a training episode
     total_timesteps: 10000 # Total number of timesteps in an episode
-    checkpoint_dir: learner/demo_models/turtlebot_checkpoint_demos # Relative path to save checkpointed models
+    checkpoint_dir: learner/ppo2_checkpoints/turtlebot3 # Relative path to save checkpointed models
+    pref_model_dir: learner/pref_model/trex_reward_turtlebot3
