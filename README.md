@@ -80,7 +80,7 @@ export PYTHONPATH=~/anaconda3/envs/TREX/lib/python3.6/site-packages:$PYTHONPATH 
 source ~/trex_ros_ws/devel/setup.bash
 ```
 ## Killing Gazbeo
-Sometimes the Gazebo application can remain open in the background after training and cause some issues layer on when trying to retrain.  Set the following alias in your .bashrc to kill all gzservers and gzclients, in the case that Gazebo does not shut down after training.
+Sometimes the Gazebo application can remain open in the background after training and cause some issues later on when trying to retrain.  Set the following alias in your .bashrc to kill all gzservers and gzclients. This will ensure all background gazebo applications have been properly shut down.
 ```
 alias killgazebo="killall -9 gazebo & killall -9 gzserver  & killall -9 gzclient"
 ```
