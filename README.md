@@ -79,6 +79,11 @@ conda activate TREX # If applicable
 export PYTHONPATH=~/anaconda3/envs/TREX/lib/python3.6/site-packages:$PYTHONPATH # Necessary ONLY IF using Conda with ROS
 source ~/trex_ros_ws/devel/setup.bash
 ```
+## Killing Gazbeo
+Sometimes the Gazebo application can remain open in the background after training. Incase that the gazebo interface does not shut down after training. Set this alias in your .bashrc to kill all gzservers and gzclients. 
+```
+alias killgazebo="killall -9 gazebo & killall -9 gzserver  & killall -9 gzclient"
+```
 
 ## Modify config files as needed
 The provided /config/\*yaml files were developed on my personal computer; you will need to change the trex_ros_ws parameter.
