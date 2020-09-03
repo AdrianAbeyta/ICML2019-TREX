@@ -114,13 +114,6 @@ Gazebo should appear and a visual representation of training will begin. The che
 ```
 The checkpoints will be loaded based on the designated save_path set in the launch file. The learned reward function will be saved in the designated pref_model_dir set in the config file. 
 
-## Use the TREX preference model to train a new RL model
-- The Stable-baselines Proximal Policy Optimization (PP02) RL model will be trained once again. However, the RL model will now use the T-REX neural network learned reward rather than the true enviornment reward. In the terminal of your choice, use the roslaunch command to begin training:
-
-```
-  $ roslaunch TODO
-```
-The checkpoints will be loaded based on the designated save_path set in the launch file. The learned policy will be saved in the designated (TODO) set in the launch file. 
 
 # Known Issues / Potential Improvements / Future Work
 
@@ -129,5 +122,5 @@ The checkpoints will be loaded based on the designated save_path set in the laun
 - Set up the git repo to add other repositories as submodules, so that a git clone --recursive of this repo is the only clone command needed.
 - Alternate meshes of the UT campus can be found in https://utexas.app.box.com/folder/121689530768. These meshes feature fewer polygons for quicker loading, and have color as well. There is also a Pandas datafile which contains a lookup table to determine the terrain type for a given (x,y) position on the mesh. Ideally, you could get your current odometry (i.e. x,y pose) in gazebo, query the Pandas database with your (x,y), and determine the terrain classification. We wanted to implement this function but ran out of time in Summer 2020. The enclosed .boxnote contains more information.
 - Change the ros_ws_abspath to a relative path, or one that uses ~/ so that the user doesn't need to change it manually
-
+- Retrain tensorflow TREX learned reward with PPO2 and do quatitative results. 
 
