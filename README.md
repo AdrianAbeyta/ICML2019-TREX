@@ -19,16 +19,9 @@ This software was run using NVidia driver 440.100, CUDA 10.1, cuDNN 7.6.5 on a G
 
 # Installation
 
-NOTE: The UTBox folders and Github repos may require special access.
+NOTE: The Github repositories require special access.
 
-If you can't get access to UTBox links or UT Nuclear Robotics Github, please contact Dr. Pryor. For access to this (or any other Github repo), please contact me.
-
-## Copy Gazebo models into your model folder
-First, copy over the gazebo model/mesh files from the cloud drive here: https://utexas.app.box.com/folder/121632471058
-
-Copy the /Stairs and /ut_mesh folders into your ~/.gazebo/models folder.
-
-For example, the completed file path should be ~/.gazebo/models/ut_mesh
+If you can't access UT Nuclear Robotics' private Github, please contact Dr. Pryor. For access to this (or any other Github repo), please contact me.
 
 ## Create & activate Conda environment (Optional but recommended)
 In a terminal:
@@ -111,21 +104,39 @@ Other available walrus tasks include walrus_nav (a 2d navigation task).
 
 Gazebo should appear and a visual representation of training will begin. The checkpoints will be saved in the designated checkpoint_dir set in the appropriate config/\*yaml file.
 
+Sample checkpoint files are available in the walrus_balance/checkpoints, walrus_stairs/checkpoints, and learner/ppo2_checkpoints folders.
+
 ## Train the TREX preference model
 - Once checkpoints are generated, a neural network will be created from these checkpoints to approximate a learned reward function. In the terminal of your choice, use the roslaunch command to begin training:
 
 ```
   $ roslaunch trex_openai_ros gen_pref_model.launch robot:='walrus' task:='walrus_balance'
 ```
-The checkpoints will be loaded based on the designated save_path set in the launch file. The learned reward function will be saved in the designated pref_model_dir set in the config file. 
+or
+```
+  $ roslaunch trex_openai_ros gen_pref_model.launch robot:='walrus' task:='walrus_stairs'
+```
 
+
+The checkpoints will be loaded based on the designated save_path set in the launch file. The learned reward function will be saved in the designated pref_model_dir set in the config file.
+
+Sample preference model files are available in the walrus_balance/pref_model and walrus_stairs/pref_model folders.
 
 # Known Issues / Potential Improvements / Future Work
 
 - Currently, the preference model only accepts GTraj trajectory types. This could be expanded to The other trajectory types in mujoco/preference_learning.py 
 - Occasional simulation robot reset issues during training.
 - Set up the git repo to add other repositories as submodules, so that a git clone --recursive of this repo is the only clone command needed.
-- Alternate meshes of the UT campus can be found in https://utexas.app.box.com/folder/121689530768. These meshes feature fewer polygons for quicker loading, and have color as well. There is also a Pandas datafile which contains a lookup table to determine the terrain type for a given (x,y) position on the mesh. Ideally, you could get your current odometry (i.e. x,y pose) in gazebo, query the Pandas database with your (x,y), and determine the terrain classification. We wanted to implement this function but ran out of time in Summer 2020. The enclosed .boxnote contains more information.
 - Change the ros_ws_abspath to a relative path, or one that uses ~/ so that the user doesn't need to change it manually
 - Retrain tensorflow TREX learned reward with PPO2 and do quatitative results. 
 
+## Gazebo model of UT Campus
+While working on this project in summer 2020, the TEXPERT team at ARL developed meshes of the UT Campus. There are several meshes of the UT campus available on UTBox here: https://utexas.app.box.com/folder/121632471058
+
+To use the UT campus world in Gazebo:
+- Copy the /ut_mesh folder into your ~/.gazebo/models folder. For example, the completed file path should be ~/.gazebo/models/ut_mesh
+- The ut_mesh.world file in walrus_gazebo package can be used to launch the mesh.
+
+Alternate meshes of the UT campus can be found in https://utexas.app.box.com/folder/121689530768. These meshes feature fewer polygons for quicker loading, and have color as well. There is also a Pandas datafile which contains a lookup table to determine the terrain type for a given (x,y) position on the mesh. Ideally, you could get your current odometry (i.e. x,y pose) in gazebo, query the Pandas database with your (x,y), and determine the terrain classification. We wanted to implement this function but ran out of time in Summer 2020. The enclosed .boxnote contains more information.
+
+NOTE: to access the UT Nuclear Robotics UTBox, please contact Dr. Pryor.
