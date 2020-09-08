@@ -15,4 +15,13 @@ walrus: #namespace
     checkpoint_dir: walrus_stairs/checkpoints # Relative path to save checkpointed models
 
     # Preference model parameters
-    pref_model_dir: walrus_stairs/pref_model # Relative path to save the preference model (reward function)
+    pref_model_dir: walrus_stairs/pref_model/gt # Relative path to save the preference model (reward function)
+    min_length: 100 # Minimum trajectory length for suboptimal trajectories to train pref model
+    include_action: true # Whether or not to include action in the reward approximation function
+    num_models: 5 # Number of preference models to train
+    steps: 50 # Length of trajectory data snippet used to train the Preference Model
+    num_layers: 2 # Number of layers for the fully-connected neural network (reward function approximation)
+    embedding_dims: 256 # Number of nodes in the hidden NN layers
+    D: 1000 # Number of data snippets to train the preference model
+    l2_reg: .01 # L2 regularization size (loss function?)
+    noise: .1 # Noise level to add onto training label

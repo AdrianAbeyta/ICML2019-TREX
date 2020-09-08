@@ -1,0 +1,2 @@
+model_checkpoint_path: "/home/jd/trex_install_ws/src/ICML2019-TREX/walrus_stairs/pref_model/gt/model_4.ckpt"
+all_model_checkpoint_paths: "/home/jd/trex_install_ws/src/ICML2019-TREX/walrus_stairs/pref_model/gt/model_4.ckpt"
