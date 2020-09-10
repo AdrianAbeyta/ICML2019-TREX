@@ -105,13 +105,17 @@ class PrefModel(object):
 
         self.saver = tf.train.Saver(var_list=self.parameters(train=False),max_to_keep=0)
 
-    def parameters(self,train=False):
-        if train:
-            return tf.trainable_variables(self.param_scope.name)
-        else:
-            return tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES,self.param_scope.name)
+         #Determine if the actions and observations are continuous or discrete. Used when called. 
 
-    def train(self,D,batch_size=64,iter=10000,l2_reg=0.01,noise_level=0.1,debug=False):
+        
+
+        def parameters(self,train=False):
+            if train:
+                return tf.trainable_variables(self.param_scope.name)
+            else:
+                return tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES,self.param_scope.name)
+
+    def train(self,D,batch_size=64,iter=128,l2_reg=0.01,noise_level=0.1,debug=False):
         """
         Training will be early-terminate when validation accuracy becomes large enough..?
 
@@ -173,7 +177,7 @@ class PrefModel(object):
                     tqdm.write(('loss: %f (l2_loss: %f), acc: %f, valid_acc: %f'%(loss,l2_loss,acc,valid_acc)))
 
 
-    def train_with_dataset(self,dataset,batch_size,include_action=False,iter=10000,l2_reg=0.01,debug=False):
+    def train_with_dataset(self,dataset,batch_size,include_action=False,iter=128,l2_reg=0.01,debug=False):
         sess = tf.get_default_session()
 
         for it in tqdm(range(iter),dynamic_ncols=True):
@@ -371,7 +375,6 @@ def train(prefdir, env, chkptdir, min_length, include_action, num_models, steps,
 
     # train_agents = [RandomAgent(env.action_space)] if args.random_agent else []
     train_agents=[] # Initialize empty list
-    
     #models = sorted([p for p in Path(args.learners_path).glob('?????') if int(p.name) <= args.max_chkpt])
     models = sorted([p for p in checkpoint_path.glob('*.zip')])
     #print(models)
@@ -390,13 +393,33 @@ def train(prefdir, env, chkptdir, min_length, include_action, num_models, steps,
 
     ### Train Tensorflow TREX preference models
     # Initialize model objects
+
     models = []
+
     for i in range(num_models):
+
         with tf.variable_scope('model_%d'%i):
             rospy.logdebug('observation_space: ' + str(env.observation_space) + ', action_space: ' + str(env.action_space))
             rospy.logdebug('observation_space shape: ' + str(env.observation_space.shape) + ', action_space shape: ' + str(env.action_space.shape))
-            models.append(PrefModel(include_action,env.observation_space.shape[0],env.action_space.shape[0],steps=steps,num_layers=num_layers,embedding_dims=embedding_dims)) # TODO: come back and fix the dimensions
+            
+             # If it's a discrete space
+        if (env.action_space.__class__ == 'gym.spaces.discrete.Discrete'):
+            num_actions= env.action_space.n
 
+        # If it's continuous
+        elif (env.action_space.__class__ == 'gym.spaces.box.Box'): 
+            num_actions = env.action_space.shape[0]
+        
+        # If it's continuous
+        if (env.observation_space.__class__ == 'gym.spaces.discrete.Discrete'):
+            num_observation= env.observation_space.n
+
+        #If it's continuous
+        elif (env.observation_space.__class__ == 'gym.spaces.box.Box'):
+            num_actions=env.observation_space.shape[0]
+            
+        pref_model=PrefModel(include_action,num_observation,num_actions,steps=steps,num_layers=num_layers,embedding_dims=embedding_dims)# TODO: come back and fix the dimensions
+        models.append(pref_model) 
     ### Initialize Parameters
     init_op = tf.group(tf.global_variables_initializer(),
                         tf.local_variables_initializer())
