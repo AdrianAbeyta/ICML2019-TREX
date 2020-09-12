@@ -352,6 +352,22 @@ class GTDataset(object):
 # Backpropagate the reward function model to fit the trajectory data
 def train(prefdir, env, chkptdir, min_length, include_action, num_models, steps, num_layers, embedding_dims, D_num_samples, l2_reg, noise):
     
+    # If it's a discrete space
+    if (env.action_space.__class__ == 'gym.spaces.discrete.Discrete'):
+        num_actions=env.action_space.n
+
+    # If it's continuous
+    elif (env.action_space.__class__ == 'gym.spaces.box.Box'): 
+        num_actions = env.action_space.shape[0]
+    
+    # If it's continuous
+    if (env.observation_space.__class__ == 'gym.spaces.discrete.Discrete'):
+        num_observation= env.observation_space.n
+
+    #If it's continuous
+    elif (env.observation_space.__class__ == 'gym.spaces.box.Box'):
+        num_observation=env.observation_space.shape[0]
+
     # Convert directories to path objects
     pref_path = Path(prefdir)
     checkpoint_path = Path(chkptdir)
@@ -401,25 +417,7 @@ def train(prefdir, env, chkptdir, min_length, include_action, num_models, steps,
         with tf.variable_scope('model_%d'%i):
             rospy.logdebug('observation_space: ' + str(env.observation_space) + ', action_space: ' + str(env.action_space))
             rospy.logdebug('observation_space shape: ' + str(env.observation_space.shape) + ', action_space shape: ' + str(env.action_space.shape))
-            
-             # If it's a discrete space
-        if (env.action_space.__class__ == 'gym.spaces.discrete.Discrete'):
-            num_actions= env.action_space.n
-
-        # If it's continuous
-        elif (env.action_space.__class__ == 'gym.spaces.box.Box'): 
-            num_actions = env.action_space.shape[0]
-        
-        # If it's continuous
-        if (env.observation_space.__class__ == 'gym.spaces.discrete.Discrete'):
-            num_observation= env.observation_space.n
-
-        #If it's continuous
-        elif (env.observation_space.__class__ == 'gym.spaces.box.Box'):
-            num_actions=env.observation_space.shape[0]
-            
-        pref_model=PrefModel(include_action,num_observation,num_actions,steps=steps,num_layers=num_layers,embedding_dims=embedding_dims)# TODO: come back and fix the dimensions
-        models.append(pref_model) 
+            models.append(PrefModel(include_action,num_observation,num_actions,steps=steps,num_layers=num_layers,embedding_dims=embedding_dims))# TODO: come back and fix the dimensions) 
     ### Initialize Parameters
     init_op = tf.group(tf.global_variables_initializer(),
                         tf.local_variables_initializer())

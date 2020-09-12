@@ -14,11 +14,11 @@ turtlebot3: #namespace
 
     gamma: 0.999
     nepisodes: 8 #Number of episodes to run. 
-    nsteps: 128 #Number of steps to run for each episode. 
+    nsteps: 10000 #Number of steps to run for each episode. 
     running_step: 0.06 # Time for each step.
     log_interval: 1000 #Number of timesteps before logging.
     save_freq: 1000 #Frequency of model checkpoints that will be saved durring training.
-    total_timesteps: 128 #Number of TIME steps aloud for each episode.
+    total_timesteps: 10000 #Number of TIME steps aloud for each episode.
     
 
     #trex reward parameters
