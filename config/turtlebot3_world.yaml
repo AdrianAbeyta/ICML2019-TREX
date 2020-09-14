@@ -3,9 +3,9 @@ turtlebot3: #namespace
     #Logging and enviornment parameters
 
     task_and_robot_environment_name: 'TurtleBot3World-v0' #The robot env and task env id. Edit to change agent world env
-    ros_ws_abspath: "/home/adrian/trex_ros_ws" #Workspace containing your openai_ros and turtlbot3 ROS files.
+    ros_ws_abspath: "/home/jd/trex_ros_ws" #Workspace containing your openai_ros and turtlbot3 ROS files.
     pkg_path: "ICML2019-TREX" #Identifies the path in which to reference the necessary parameters for launch. 
-    save_path: '/home/adrian/trex_ros_ws/src/learner/ppo2_checkpoints'
+    save_path: '/home/jd/trex_ros_ws/src/learner/ppo2_checkpoints'
     running_step: 0.04 # amount of time the control will be executed.
     pos_step: 0.016 # Increment in position for each command.
     

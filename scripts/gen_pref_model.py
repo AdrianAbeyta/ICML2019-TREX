@@ -104,16 +104,12 @@ class PrefModel(object):
         self.update_op = self.optim.minimize(self.loss+self.l2_loss,var_list=self.parameters(train=True))
 
         self.saver = tf.train.Saver(var_list=self.parameters(train=False),max_to_keep=0)
-
-         #Determine if the actions and observations are continuous or discrete. Used when called. 
-
         
-
-        def parameters(self,train=False):
-            if train:
-                return tf.trainable_variables(self.param_scope.name)
-            else:
-                return tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES,self.param_scope.name)
+    def parameters(self,train=False):
+        if train:
+            return tf.trainable_variables(self.param_scope.name)
+        else:
+            return tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES,self.param_scope.name)
 
     def train(self,D,batch_size=64,iter=128,l2_reg=0.01,noise_level=0.1,debug=False):
         """
@@ -353,19 +349,19 @@ class GTDataset(object):
 def train(prefdir, env, chkptdir, min_length, include_action, num_models, steps, num_layers, embedding_dims, D_num_samples, l2_reg, noise):
     
     # If it's a discrete space
-    if (env.action_space.__class__ == 'gym.spaces.discrete.Discrete'):
+    if (type(env.action_space).__name__ == 'Discrete'):
         num_actions=env.action_space.n
 
     # If it's continuous
-    elif (env.action_space.__class__ == 'gym.spaces.box.Box'): 
+    elif (type(env.action_space).__name__ == 'Box'): 
         num_actions = env.action_space.shape[0]
     
     # If it's continuous
-    if (env.observation_space.__class__ == 'gym.spaces.discrete.Discrete'):
+    if (type(env.observation_space).__name__ == 'Discrete'):
         num_observation= env.observation_space.n
 
     #If it's continuous
-    elif (env.observation_space.__class__ == 'gym.spaces.box.Box'):
+    elif (type(env.observation_space).__name__ == 'Box'):
         num_observation=env.observation_space.shape[0]
 
     # Convert directories to path objects
